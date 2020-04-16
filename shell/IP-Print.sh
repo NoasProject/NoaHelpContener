@@ -28,9 +28,9 @@ done;
 function LINE_POST() {
     curl -X POST \
     -H 'Content-Type: application/json' \
-    -H 'Authorization: Bearer QLYdD/wvRmZ5pBB7MWlj6Bbn1E/ZhroYBcNE29011sNTTeoeo2tc5dXEB9ulEwtlxeHDFiQgWypn+JsVKKX2zCvHYzOhoFLJkCBmXIczo7ZCEoA6Hw4UEMq7JYYHxq8OZgBgeIQPTqIn7k8vodYRbgdB04t89/1O/w1cDnyilFU=' \
+    -H 'Authorization: Bearer ' \
     -d '{
-        "to": "U6939b709721083e0faf03ea050f60d8f",
+        "to": "",
         "messages":[
             {
             "type": "text",
