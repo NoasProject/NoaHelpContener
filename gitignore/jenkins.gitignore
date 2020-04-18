@@ -1,5 +1,7 @@
 # 一般的に除外するもの
 *.swp
+.DS_Store
+.DS_Store/
 
 # jenkins本体
 *.jar
