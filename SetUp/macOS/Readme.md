@@ -9,4 +9,6 @@ sh setup.sh
 - git-lfs
 - mono
 - nodebrew
+- unrar
+- PHP(Version入れ替え)
 ```

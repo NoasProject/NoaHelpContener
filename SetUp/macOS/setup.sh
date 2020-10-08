@@ -16,6 +16,7 @@ readonly installGit=false
 readonly installGitLFS=false
 readonly installMono=false
 readonly installNodeBrew=false
+readonly installUnRar=false
 
 # OS Version Check
 OS_Catalina=101500
