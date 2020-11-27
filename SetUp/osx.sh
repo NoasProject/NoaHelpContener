@@ -12,29 +12,37 @@ SeparateLine() {
 
 ## Constant
 readonly installGnuSed=true
-readonly installGit=false
-readonly installGitLFS=false
-readonly installMono=false
-readonly installNodeBrew=false
-readonly installUnRar=false
+readonly installGit=true
+readonly installGitLFS=true
+readonly installMono=true
+readonly installNodeBrew=true
+readonly installUnRar=true
+readonly installTig=true
 
 # OS Version Check
-OS_Catalina=101500
-OS_Version=$(sw_vers -productVersion | (IFS=. read -r major minor micro; printf "%2d%02d%02d" ${major:-0} ${minor:-0} ${micro:-0}))
+OS_CATALINA=101500 # macOS Catalina
+OS_BIGSUR=110000 # macOS Big Sur
+OS_VERSION=$(sw_vers -productVersion | (IFS=. read -r major minor micro; printf "%2d%02d%02d" ${major:-0} ${minor:-0} ${micro:-0}) | sed -e 's/[^0-9]//g')
 
 echo `SeparateLine`
 
-echo "OsVersion: `sw_vers -productVersion`"
+echo "OsVersion: `sw_vers -productVersion` - ${OS_VERSION}"
 
 # Path
 BashProfilePath="~/.bash_profile"
 BashrcPath="~/.bashrc"
 
 # OSX Catalina
-if [ ${OS_Version} -ge ${OS_Catalina} ]; then
+if [ ${OS_VERSION} -ge ${OS_BIGSUR} ]; then
+    echo 'Mac OS Big Sur'
+    BashProfilePath="~/.zprofile"
+    BashrcPath="~/.zshrc"
+elif [ ${OS_VERSION} -ge ${OS_CATALINA} ]; then
     echo 'OSX Catalina'
     BashProfilePath="~/.zprofile"
     BashrcPath="~/.zshrc"
+else
+    echo 'OSX Mojave'
 fi
 
 # Validate File
@@ -55,20 +63,36 @@ fi
 # fi
 
 # brew install
-if [ `brew -v | grep 'command not found'` ]; then
+BREW_VERSION="$(brew -v | grep 'command not found')"
+if [ ${BREW_VERSION} ]; then
     `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"`
     echo "SetUp --> brew"
 else
     echo 'installed brew'
 fi
 
+# tig
+if "${installTig}"; then
+    result="$(tig --version)"
+    if [ $? -ne 0 ]; then
+
+        echo 'tig not find install !!!'
+
+        brew install tig
+
+    else
+        echo 'Installed tig'
+    fi
+fi
+
 # gnu-sed
 if "${installGnuSed}"; then
-    if [ `sed --version | grep 'sed \(GNU sed\)'` ]; then
+    result="$(sed --version | grep 'sed \(GNU sed\)')"
+    if [ $? -ne 0 ]; then
 
+        echo 'gnu-sed not find install !!!'
         brew install gnu-sed
 
-        echo "SetUp --> gnu-sed"
     else
         echo 'installed gnu-sed'
     fi
@@ -141,5 +165,3 @@ if "${installNodeBrew}"; then
         echo "Added nodebrew PATH. ${BashProfilePath}"
     fi
 fi
-
-
