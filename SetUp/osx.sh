@@ -20,8 +20,9 @@ readonly installUnRar=true
 readonly installTig=true
 
 # OS Version Check
-OS_CATALINA=101500 # macOS Catalina
-OS_BIGSUR=110000 # macOS Big Sur
+OS_CATALINA=101500    # macOS Catalina
+OS_BIGSUR=110000      # macOS Big Sur
+OS_SONOMA=140201      # maxOS Sonama
 OS_VERSION=$(sw_vers -productVersion | (IFS=. read -r major minor micro; printf "%2d%02d%02d" ${major:-0} ${minor:-0} ${micro:-0}) | sed -e 's/[^0-9]//g')
 
 echo `SeparateLine`
